@@ -4,7 +4,7 @@ module.exports = {
     dbConfig: {
         user: "PersonalityML",
         password: "Colombia10",
-        server: "personalityml.database.windows.net",
+        server: "personalityinsights.database.windows.net",
         database: "PersonalityML",
         options: {
             encrypt: true // Use this if you're on Windows Azure 
