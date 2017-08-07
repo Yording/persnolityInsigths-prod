@@ -6,7 +6,7 @@ var PersonalyInsightsV3 = require('watson-developer-cloud/personality-insights/v
 var sql = require('mssql')
 
 // Variables
-var query = ''
+var query = '';
 
 
 function recursiveParsingAnalysis(obj) {
@@ -105,21 +105,21 @@ module.exports = {
                 var wrapped = {
                     name: 'altogether',
                     children: [personality, needs, values, consumption_preferences]
-                }
+                };
                 data.personality.map(function(ele) {
-                    personality.children.push(recursiveParsingAnalysis(ele))
-                })
+                    personality.children.push(recursiveParsingAnalysis(ele));
+                });
                 data.needs.map(function(ele) {
-                    needs.children.push(recursiveParsingAnalysis(ele))
-                })
+                    needs.children.push(recursiveParsingAnalysis(ele));
+                });
                 data.values.map(function(ele) {
-                    values.children.push(recursiveParsingAnalysis(ele))
-                })
+                    values.children.push(recursiveParsingAnalysis(ele));
+                });
                 data.consumption_preferences.map(function(ele) {
-                    consumption_preferences.children.push(recursiveParsingAnalysis(ele))
-                })
+                    consumption_preferences.children.push(recursiveParsingAnalysis(ele));
+                });
 
-                analysis.recordset[0]['analisys'] = wrapped
+                analysis.recordset[0].analisys = wrapped;
                 res.status(200).send(analysis.recordset[0]);
             }
         });
@@ -133,7 +133,7 @@ module.exports = {
             "headers": {
                 'X-Watson-Learning-Opt-Out': 'true'
             }
-        })
+        });
 
         var params = {
             text: req.body.text,
@@ -144,26 +144,27 @@ module.exports = {
                 'accept-language': 'en',
                 'accept': 'application/json'
             }
-        }
+        };
 
         personalyInsights.profile(params, function(err, data) {
-            if (err)
+            if (err) {
+                console.log(err);
                 return res.status(500).send({ message: `Error al realizar al consultar el servicio en watson: ${err}` })
-            else {
+            } else {
                 // * En este query debe ir el update que actualizara el analisis que devuelve watson
                 // console.log(`${unescape(JSON.stringify(data))}`)
-                query = `INSERT INTO [dbo].[analisys] ([id_study], [id_candidate], [analisys], [observations], [date_created]) VALUES (${req.body.id_study}, ${req.body.id_candidate}, N'${JSON.stringify(data)}', '', GETDATE())`
+                query = `INSERT INTO [dbo].[analisys] ([id_study], [id_candidate], [analisys], [observations], [date_created]) VALUES (${req.body.id_study}, ${req.body.id_candidate}, N'${JSON.stringify(data)}', '', GETDATE())`;
                 executeQuery(res, query)
             }
         })
 
     },
     updateAnalysis: function(req, res) {
-        query = "UPDATE A SET A.[observations] = '" + req.body.observations + "' FROM [dbo].[analisys] A INNER JOIN [dbo].[study] S ON A.[id_study] = S.[id] WHERE A.[id] = " + req.params.id
+        query = "UPDATE A SET A.[observations] = '" + req.body.observations + "' FROM [dbo].[analisys] A INNER JOIN [dbo].[study] S ON A.[id_study] = S.[id] WHERE A.[id] = " + req.params.id;
         executeQuery(res, query)
     },
     deleteAnalysis: function(req, res) {
-        query = "DELETE A FROM [dbo].[analisys] A INNER JOIN [dbo].[study] S ON A.[id_study] = S.[id] WHERE A.[id] = " + req.params.id
+        query = "DELETE A FROM [dbo].[analisys] A INNER JOIN [dbo].[study] S ON A.[id_study] = S.[id] WHERE A.[id] = " + req.params.id;
         executeQuery(res, query)
     }
 }

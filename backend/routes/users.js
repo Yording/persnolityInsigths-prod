@@ -7,6 +7,7 @@ var userCtrl = require('../controllers/users')
 
 router
     .get("/", userCtrl.getUsers) // get users
+    .get("/:id",userCtrl.getUser)
     .post("/", userCtrl.createUser) // create user
     .put("/:id", userCtrl.updateUser) // update user
     .delete("/:id", userCtrl.deleteUser) // delete user

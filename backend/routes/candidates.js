@@ -6,6 +6,7 @@ var candidateCtrl = require('../controllers/candidates')
 
 router
     .get('/:id', candidateCtrl.getCandidate)
+    .get('/', candidateCtrl.getCandidates)
     .post('/', candidateCtrl.createCandidate)
     .put('/:id', candidateCtrl.updateCandidate)
     .delete('/:id', candidateCtrl.deleteCandidate)

@@ -31,6 +31,9 @@ app
         app.get('/', function(req, res){
             res.sendFile(path.resolve(__dirname,'../dist/index.html'));
         });
+        app.get('/callback', function(req, res){
+            res.sendFile(path.resolve(__dirname,'../dist/index.html'));
+        });
     }
 
 

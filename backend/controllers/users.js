@@ -12,9 +12,14 @@ module.exports = {
         query = "select [id], [rol_id], [nick], [email] from [user]"
         executeQuery(res, query)
     },
+    getUser: function(req, res) {
+        query = "select 1 as ok from [user] where id = " + req.params.id
+        executeQuery(res, query)
+    },
     // Función para crear un nuevo usuario
     createUser: function(req, res) {
-        query = "INSERT INTO [user] ([rol_id], [nick], [email]) VALUES (1, '" + req.body.nick + "', '" + req.body.email + "')"
+        console.log(`INSERT INTO [user] ([id],[rol_id], [nick], [email]) VALUES (${req.body.id_user},1, '${req.body.nick}', '${req.body.email}'); INSERT INTO [dbo].[psicologist] ([id_user], [id_plan], [name], [last_name]) VALUES (${req.body.id_user}, 1, '${req.body.name}', '${req.body.last_name}')`)
+        query = `INSERT INTO [user] ([id],[rol_id], [nick], [email]) VALUES (${req.body.id_user},1, '${req.body.nick}', '${req.body.email}'); INSERT INTO [dbo].[psicologist] ([id_user], [id_plan], [name], [last_name]) VALUES (${req.body.id_user}, 1, '${req.body.name}', '${req.body.last_name}')`
         executeQuery(res, query)
     },
     // Actualizar un usuario existente en la b.d

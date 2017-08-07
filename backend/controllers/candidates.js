@@ -9,7 +9,12 @@ var query = ''
 module.exports = {
     // Funcion para retornar un candidato especifico de un psicolog
     getCandidate: function(req, res) {
-        query = "SELECT C.[id_user], C.[name], C.[last_name] FROM [dbo].[candidate] C WHERE C.[id_user] = " + req.params.id
+        query = "SELECT C.[id_user], C.[name], C.[last_name] FROM [dbo].[candidate] C WHERE C.[id_user] = " + req.params.id;
+        executeQuery(res, query)
+    },
+    getCandidates: function(req, res) {
+        req.query.filter = req.query.filter || '';
+        query = `SELECT C.[id_user], C.[name], C.[last_name] FROM [dbo].[candidate] C WHERE C.[name] LIKE '%${req.query.filter}%' OR C.[last_name] LIKE '%${req.query.filter}%'`;
         executeQuery(res, query)
     },
     createCandidate: function(req, res) {

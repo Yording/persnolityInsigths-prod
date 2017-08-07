@@ -9,7 +9,7 @@ router
     .get('/:id', psychologistCtrl.getPsychologist)
     .get('/:id_user/getCandidates/:id', psychologistCtrl.getCandidate)
     .get('/:id_user/getCandidates/', psychologistCtrl.getCandidates)
-    .post('/', psychologistCtrl.createPsychologist)
+    // .post('/', psychologistCtrl.createPsychologist)
     .put('/:id', psychologistCtrl.updatePsychologist)
     .delete('/:id', psychologistCtrl.deletePsychologist)
 
